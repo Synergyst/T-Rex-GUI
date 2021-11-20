@@ -4,7 +4,7 @@ This GUI is just a UI where certain features will be added to ease the setup of 
 
 ## Installation
 
-Extract the release zip contents to the same folder with the T-Rex Miner
+Extract the [release](https://github.com/Synergyst/T-Rex-GUI/releases) zip contents to the same folder with the T-Rex Miner
 
 You should see something like `t-rex.exe`, `T-Rex_GUI.exe`, `T-Rex_GUI.exe.config` in the same directory if completed correctly.
 

@@ -1,4 +1,4 @@
-## <img src="TestGUI/T-Rex_GUI_Icon.png" width="86" alt="T-Rex-TestGUI"> T-Rex TestGUI
+## <img src="T-Rex_GUI_Icon.png" width="86" alt="T-Rex-TestGUI"> T-Rex TestGUI
 
 This GUI is just a UI where certain features will be added to ease the setup of T-Rex for complete novices
 

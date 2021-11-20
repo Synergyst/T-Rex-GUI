@@ -2,6 +2,8 @@
 
 This GUI is just a UI where certain features will be added to ease the setup of T-Rex for complete novices
 
+It is not developed by the T-Rex Miner developers, though [Synergyst](https://github.com/Synergyst/T-Rex-GUI) is the official GitHub repository.
+
 ## Installation
 
 Extract the [release](https://github.com/Synergyst/T-Rex-GUI/releases) zip contents to the same folder with the T-Rex Miner

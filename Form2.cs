@@ -18,13 +18,11 @@ namespace TRexGUI {
                 }
             };
         }
-        public void ChooseFolder(TextBox tb, FolderBrowserDialog fbd) {
-            if (fbd.ShowDialog() == DialogResult.OK) {
-                tb.Text = fbd.SelectedPath + @"\";
-            }
-        }
         public void ChooseFile(TextBox tb, OpenFileDialog ofd) {
-            ofd.InitialDirectory = tb.Text;
+            //ofd.InitialDirectory = tb.Text;
+            ofd.Title = "Select the T-Rex Miner executable";
+            ofd.FileName = "t-rex.exe";
+            ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             if (ofd.ShowDialog() == DialogResult.OK) {
                 tb.Text = ofd.SafeFileName;
             }
@@ -53,16 +51,6 @@ namespace TRexGUI {
                 Location = Properties.Settings.Default.Location;
                 Size = Properties.Settings.Default.Size;
             }
-            String ExeDir = "";
-            if (string.IsNullOrEmpty(Properties.Settings.Default.ExeDir)) {
-                Console.WriteLine("No location to T-Rex directory is set!\nYour default directory is: C:\\\n\n");
-                Properties.Settings.Default.ExeDir = "C:\\";
-                ExeDir = Properties.Settings.Default.ExeDir;
-                textBox1.Text = ExeDir;
-            } else {
-                ExeDir = Properties.Settings.Default.ExeDir;
-                textBox1.Text = ExeDir;
-            }
             String Config = "";
             if (string.IsNullOrEmpty(Properties.Settings.Default.Config)) {
                 Console.WriteLine("No configuration file is set!\nYour default configuration filename is: config_example\n\n");
@@ -83,16 +71,6 @@ namespace TRexGUI {
                 ExeName = Properties.Settings.Default.ExeName;
                 textBox5.Text = ExeName;
             }
-            String APIKey = "";
-            if (string.IsNullOrEmpty(Properties.Settings.Default.APIKey)) {
-                Console.WriteLine("No API-key is set!\nYour default password will be: 1\n\n");
-                Properties.Settings.Default.APIKey = "bwAAAAAAAACOfiFOTynL6G9fIsWtPhSvj+dI9ymnJHTFWdVevcVMT/d/nJrJBizraJZDgOYZU7XTV9LPgJ/AkK0q9f99WgVWGr7obXYtP3Q=";
-                APIKey = Properties.Settings.Default.APIKey;
-                textBox3.Text = APIKey;
-            } else {
-                APIKey = Properties.Settings.Default.APIKey;
-                textBox3.Text = APIKey;
-            }
         }
         private void Form2_FormClosing(object sender, EventArgs e) {
             if (WindowState == FormWindowState.Maximized) {
@@ -112,9 +90,7 @@ namespace TRexGUI {
                 Properties.Settings.Default.Maximised = false;
                 Properties.Settings.Default.Minimised = true;
             }
-            Properties.Settings.Default.ExeDir = textBox1.Text;
             Properties.Settings.Default.Config = textBox2.Text;
-            Properties.Settings.Default.APIKey = textBox3.Text;
             Properties.Settings.Default.ExeName = textBox5.Text;
             Properties.Settings.Default.Save();
             Console.WriteLine("Configuration window hidden..");
@@ -123,18 +99,11 @@ namespace TRexGUI {
             timer2.Stop();
             timer2.Start();
         }
-        private void button2_Click(object sender, EventArgs e) {
-            ChooseFolder(textBox1, folderBrowserDialog1);
-        }
         private void button3_Click(object sender, EventArgs e) {
             ChooseFile(textBox2, openFileDialog1);
         }
         private void GenerateNewAPIKey() {
-            MessageBox.Show("Close out of the empty console window when it opens.\nThis is a bug and hopefully can be fixed in the future.");
-            System.Threading.Thread.Sleep(2000);
-            Console.WriteLine("New API key: " + (TRexGUI.Program.ExecuteProcess(textBox5.Text, "--api-generate-key " + textBox4.Text, textBox1.Text, ProcessPriorityClass.Normal, false)));
-            Console.WriteLine("New password: '" + textBox4.Text + "'");
-            MessageBox.Show("You changed your password to: '" + textBox4.Text + "'");
+            MessageBox.Show((TRexGUI.Program.ExecuteProcess(textBox5.Text, "--api-generate-key " + textBox4.Text + " --config " + textBox2.Text, AppDomain.CurrentDomain.BaseDirectory, ProcessPriorityClass.Normal, false)) + "\nChanged password to: " + textBox4.Text);
         }
         private void timer1_Tick_1(object sender, EventArgs e) {
             timer1.Stop();
@@ -146,19 +115,10 @@ namespace TRexGUI {
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e) {
             if (checkBox1.Checked) {
-                textBox1.UseSystemPasswordChar = true;
-                textBox3.UseSystemPasswordChar = true;
                 textBox4.UseSystemPasswordChar = true;
             } else {
-                textBox1.UseSystemPasswordChar = false;
-                textBox3.UseSystemPasswordChar = false;
                 textBox4.UseSystemPasswordChar = false;
             }
-        }
-        private void timer2_Tick(object sender, EventArgs e) {
-            timer2.Stop();
-            Properties.Settings.Default.ExeDir = textBox1.Text;
-            Properties.Settings.Default.Save();
         }
         private void textBox2_TextChanged(object sender, EventArgs e) {
             timer3.Stop();
@@ -173,11 +133,6 @@ namespace TRexGUI {
             timer4.Stop();
             timer4.Start();
         }
-        private void timer4_Tick(object sender, EventArgs e) {
-            timer4.Stop();
-            Properties.Settings.Default.APIKey = textBox3.Text;
-            Properties.Settings.Default.Save();
-        }
         private void button4_Click(object sender, EventArgs e) {
             ChooseFile(textBox5, openFileDialog2);
         }
@@ -190,7 +145,6 @@ namespace TRexGUI {
             timer5.Stop();
             timer5.Start();
         }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             // TODO: Obviously dynamically change this port number, as not everyone will use 4067.
             // Though those who are changing it probably have a reason and aren't even using this tool to help hand-hold them..

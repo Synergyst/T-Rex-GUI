@@ -50,8 +50,10 @@ namespace TRexGUI {
             richTextBox1.Text = "";
             process = new Process();
             System.Windows.Forms.Form f2 = System.Windows.Forms.Application.OpenForms["Form2"];
+            process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
             process.StartInfo.FileName = ((Form2)f2).textBox5.Text;
-            String exeParams = @"--config " + ((Form2)f2).textBox2.Text + @" --api-key " + ((Form2)f2).textBox3.Text;
+            String exeParams = @"--config " + ((Form2)f2).textBox2.Text + @" ";
             process.StartInfo.Arguments = exeParams;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;

@@ -74,36 +74,12 @@ namespace TRexGUI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string APIKey {
-            get {
-                return ((string)(this["APIKey"]));
-            }
-            set {
-                this["APIKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Config {
             get {
                 return ((string)(this["Config"]));
             }
             set {
                 this["Config"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ExeDir {
-            get {
-                return ((string)(this["ExeDir"]));
-            }
-            set {
-                this["ExeDir"] = value;
             }
         }
         

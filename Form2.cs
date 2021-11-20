@@ -103,7 +103,7 @@ namespace TRexGUI {
             ChooseFile(textBox2, openFileDialog1);
         }
         private void GenerateNewAPIKey() {
-            MessageBox.Show((TRexGUI.Program.ExecuteProcess(textBox5.Text, "--api-generate-key " + textBox4.Text + " --config " + textBox2.Text, AppDomain.CurrentDomain.BaseDirectory, ProcessPriorityClass.Normal, false)) + "\nChanged password to: " + textBox4.Text);
+            MessageBox.Show((TRexGUI.Program.ExecuteProcess(textBox5.Text, "--api-generate-key " + textBox4.Text + " --config " + textBox2.Text, AppDomain.CurrentDomain.BaseDirectory, ProcessPriorityClass.Normal, false)));
         }
         private void timer1_Tick_1(object sender, EventArgs e) {
             timer1.Stop();

@@ -1,8 +1,8 @@
-## <img src="T-Rex_GUI_Icon.png" width="86" alt="T-Rex-TestGUI"> T-Rex TestGUI
+## <img src="T-Rex_GUI_Icon.png" width="86" alt="T-Rex GUI"> T-Rex GUI
 
 This GUI is just a UI where certain features will be added to ease the setup of T-Rex for complete novices
 
-It is not developed by the T-Rex Miner developers, though [Synergyst](https://github.com/Synergyst/T-Rex-GUI) is the official GitHub repository for this unofficial T-Rex GUI.
+*It is not developed by the T-Rex Miner developers, though [Synergyst](https://github.com/Synergyst/T-Rex-GUI) is the official GitHub repository for this unofficial T-Rex GUI.*
 
 ## Installation
 

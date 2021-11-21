@@ -21,13 +21,13 @@ This GUI is just a UI where certain features will be added to ease the setup of 
 * Click '[T-Rex WebUI Dashboard](http://127.0.0.1:4067)' on either GUI window (hyperlink on GitHub is only for convienence)
 * Enter your password you set to login once at the WebUI dashboard logon prompt
 * **That's all, happy mining! :)**
-* *Optional final step (if you know how to do this why are you using this GUI software in the first place?):* Remove the `T-Rex_GUI.exe` and `T-Rex_GUI.exe.config` files and make your own custom batch to call the `config.json` file
+* *Optional final step (if you know how to do this why are you using this GUI software in the first place?):* Remove the `T-Rex_GUI.exe` file and make your own custom batch to call the `config.json` file
 
 ## Installation
 
-Extract the [release](https://github.com/Synergyst/T-Rex-GUI/releases) zip contents to the same folder with the T-Rex Miner
+Download the [release](https://github.com/Synergyst/T-Rex-GUI/releases) executable to the same folder with the T-Rex Miner
 
-You should see something like `t-rex.exe`, `T-Rex_GUI.exe`, `T-Rex_GUI.exe.config` in the same directory if completed correctly.
+You should see something like `t-rex.exe`, `T-Rex_GUI.exe` in the same directory if completed correctly.
 
 ## Reporting issues / Making feature requests
 

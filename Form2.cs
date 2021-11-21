@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -26,13 +27,6 @@ namespace TRexGUI {
                 tb.Text = ofd.SafeFileName;
             }
         }
-        private void button1_Click(object sender, EventArgs e) {
-            // Handle nothing, yet (dumb-exit)..
-            Console.WriteLine("Closed Configuration GUI..");
-            this.Hide();
-            //this.Close();
-        }
-        
         private void Form2_Load(object sender, EventArgs e) {
             /*this.FormClosing += (s, e) => {
                 this.Hide();
@@ -94,12 +88,9 @@ namespace TRexGUI {
             Properties.Settings.Default.Save();
             Console.WriteLine("Configuration window hidden..");
         }
-        private void textBox1_TextChanged(object sender, EventArgs e) {
-            timer2.Stop();
-            timer2.Start();
-        }
         private void button3_Click(object sender, EventArgs e) {
             ChooseFile(textBox2, openFileDialog1, "config_example", "Select the T-Rex configuration file");
+            Properties.Settings.Default.Save();
         }
         private void GenerateNewAPIKey() {
             MessageBox.Show((TRexGUI.Program.ExecuteProcess(textBox5.Text, "--api-generate-key " + textBox4.Text + " --config " + textBox2.Text, AppDomain.CurrentDomain.BaseDirectory, ProcessPriorityClass.Normal, false)));
@@ -127,18 +118,19 @@ namespace TRexGUI {
             timer3.Stop();
             Properties.Settings.Default.Config = textBox2.Text;
             Properties.Settings.Default.Save();
-        }
-        private void textBox3_TextChanged(object sender, EventArgs e) {
-            timer4.Stop();
-            timer4.Start();
+            String ConfigFullPath = AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.Config;
+            Console.WriteLine(File.Exists(ConfigFullPath) ? "Config filename exists." : "Config filename does not exist!");
         }
         private void button4_Click(object sender, EventArgs e) {
             ChooseFile(textBox5, openFileDialog2, "t-rex.exe", "Select the T-Rex Miner executable");
+            Properties.Settings.Default.Save();
         }
         private void timer5_Tick(object sender, EventArgs e) {
             timer5.Stop();
             Properties.Settings.Default.ExeName = textBox5.Text;
             Properties.Settings.Default.Save();
+            String ExeFullPath = AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.ExeName;
+            Console.WriteLine(File.Exists(ExeFullPath) ? "Executable filename exists." : "Executable filename does not exist!");
         }
         private void textBox5_TextChanged(object sender, EventArgs e) {
             timer5.Stop();
@@ -148,6 +140,52 @@ namespace TRexGUI {
             // TODO: Obviously dynamically change this port number, as not everyone will use 4067.
             // Though those who are changing it probably have a reason and aren't even using this tool to help hand-hold them..
             System.Diagnostics.Process.Start("http://127.0.0.1:4067");
+        }
+        private void button1_Click(object sender, EventArgs e) {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to create/overwrite config.json with the contents of the config_example file?", "New configuration", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes) {
+                String DefaultConfigFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config_example");
+                String ConfigFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+                if ((File.Exists(DefaultConfigFullPath) && !File.Exists(ConfigFullPath))) {
+                    Console.WriteLine("Can create config.json");
+                    try {
+                        // Will not overwrite if the destination file already exists.
+                        // TODO: Question user if they want to restore a previous config.json[.bak] if found at this step since config.json does not exist
+                        File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config_example"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json"));
+                    }
+                    // Catch exception if the file was already copied.
+                    catch (IOException copyError) {
+                        Console.WriteLine(copyError.Message);
+                    }
+                    Properties.Settings.Default.Config = "config.json";
+                    textBox2.Text = "config.json";
+                    Properties.Settings.Default.Save();
+                    MessageBox.Show("Now using config.json as your configuration file.\n");
+                } else if ((File.Exists(DefaultConfigFullPath) && File.Exists(ConfigFullPath))) {
+                    Console.WriteLine("config.json already exists, though can be backed up then recreated");
+                    try {
+                        // Will not overwrite if the destination file already exists.
+                        if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json.bak")))
+                            File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json.bak"));
+                        File.Move(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json.bak"));
+                        File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config_example"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json"));
+                    }
+                    // Catch exception if the file was already copied.
+                    catch (IOException copyError) {
+                        Console.WriteLine(copyError.Message);
+                    }
+                    Properties.Settings.Default.Config = "config.json";
+                    textBox2.Text = "config.json";
+                    Properties.Settings.Default.Save();
+                    MessageBox.Show("Now using config.json as your configuration file.");
+                } else if (File.Exists(DefaultConfigFullPath)) {
+                    MessageBox.Show("config.json can not be created as config_example does not exist!\n\nCan not create new configuration file!\nPlease make sure you extracted config_example from your T-Rex zip/tar.gz archive..");
+                }
+                /*Console.WriteLine(File.Exists(DefaultConfigFullPath) ? "Default config filename exists." : "Default config filename does not exist!");
+                Console.WriteLine(File.Exists(ConfigFullPath) ? "Config filename exists." : "Config filename does not exist!");*/
+            } else if (dialogResult == DialogResult.No) {
+                //do something else
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using System.Runtime.InteropServices;
-
+using System.IO;
 
 namespace TRexGUI {
     public partial class Form1 : Form {
@@ -48,20 +48,26 @@ namespace TRexGUI {
             output.Clear();
             outputChanged = false;
             richTextBox1.Text = "";
-            process = new Process();
             System.Windows.Forms.Form f2 = System.Windows.Forms.Application.OpenForms["Form2"];
-            process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            //Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            process.StartInfo.FileName = ((Form2)f2).textBox5.Text;
-            String exeParams = @"--config " + ((Form2)f2).textBox2.Text + @" ";
-            process.StartInfo.Arguments = exeParams;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardInput = true;
-            process.Exited += new EventHandler(process_HasExited);
-            process.Start();
-            new Thread(ReadData) { IsBackground = true }.Start();
+            String ExeFullPath = AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.ExeName;
+            String ConfigFullPath = AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.Config;
+            if (File.Exists(ExeFullPath) && File.Exists(ConfigFullPath)) {
+                process = new Process();
+                process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                process.StartInfo.FileName = ((Form2)f2).textBox5.Text;
+                String exeParams = @"--config " + ((Form2)f2).textBox2.Text + @" ";
+                process.StartInfo.Arguments = exeParams;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardInput = true;
+                process.Exited += new EventHandler(process_HasExited);
+                process.Start();
+                new Thread(ReadData) { IsBackground = true }.Start();
+            } else {
+                richTextBox1.Text = "Executable file is missing!\n\nPlease open the Configuration GUI and follow the steps here: https://github.com/Synergyst/T-Rex-GUI";
+                return;
+            }
         }
         private static void process_HasExited(object sender, System.EventArgs e) {
             Console.WriteLine("T-Rex process has exited..");
@@ -117,12 +123,16 @@ namespace TRexGUI {
         }
         private void button3_Click(object sender, EventArgs e) {
             lock (syncGate) {
-                process.Kill();
-                richTextBox1.Text = output.ToString() + "Killed T-Rex process with exit code: " + process.ExitCode;
-                if (checkBox1.Checked) {
-                    ScrollToBottom(richTextBox1);
+                if (process != null) {
+                    process.Kill();
+                    richTextBox1.Text = output.ToString() + "Killed T-Rex process with exit code: " + process.ExitCode;
+                    if (checkBox1.Checked)
+                    {
+                        ScrollToBottom(richTextBox1);
+                    }
+                    outputChanged = false;
+
                 }
-                outputChanged = false;
             }
         }
         private void button4_Click(object sender, EventArgs e) {
@@ -130,11 +140,6 @@ namespace TRexGUI {
             ((Form2)f2).Show();
             Console.WriteLine("Configuration window reopened..");
         }
-        /*void richTextBox1_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Z && (e.Control)) {
-                MessageBox.Show("Ctrl + Z Pressed!");
-            }
-        }*/
         private void Form1_Resize(object sender, EventArgs e) {
             if (this.WindowState == FormWindowState.Minimized) {
                 notifyIcon1.Visible = true;
@@ -158,7 +163,6 @@ namespace TRexGUI {
         private void richTextBox1_TextChanged(object sender, EventArgs e) {
             //
         }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             // TODO: Obviously dynamically change this port number, as not everyone will use 4067.
             // Though those who are changing it probably have a reason and aren't even using this tool to help hand-hold them..

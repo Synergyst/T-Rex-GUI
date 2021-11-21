@@ -31,7 +31,6 @@ namespace TRexGUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
-            this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -52,16 +51,6 @@ namespace TRexGUI
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(395, 15);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Close Configuration GUI";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "config_example";
@@ -73,7 +62,7 @@ namespace TRexGUI
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(130, 70);
+            this.textBox2.Location = new System.Drawing.Point(127, 70);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(338, 20);
             this.textBox2.TabIndex = 3;
@@ -106,7 +95,7 @@ namespace TRexGUI
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(474, 70);
+            this.button3.Location = new System.Drawing.Point(471, 70);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(50, 23);
             this.button3.TabIndex = 8;
@@ -116,7 +105,7 @@ namespace TRexGUI
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(130, 96);
+            this.textBox4.Location = new System.Drawing.Point(127, 96);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(338, 20);
             this.textBox4.TabIndex = 9;
@@ -125,11 +114,11 @@ namespace TRexGUI
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(232, 21);
+            this.checkBox1.Location = new System.Drawing.Point(471, 99);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(157, 17);
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
             this.checkBox1.TabIndex = 14;
-            this.checkBox1.Text = "Show/Hide sensitive details";
+            this.checkBox1.Text = "Show/Hide";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -139,7 +128,7 @@ namespace TRexGUI
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(130, 44);
+            this.textBox5.Location = new System.Drawing.Point(127, 44);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(338, 20);
             this.textBox5.TabIndex = 15;
@@ -150,13 +139,13 @@ namespace TRexGUI
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 44);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(112, 13);
+            this.label6.Size = new System.Drawing.Size(109, 13);
             this.label6.TabIndex = 16;
-            this.label6.Text = "T-Rex binary file name";
+            this.label6.Text = "T-Rex binary filename";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(474, 44);
+            this.button4.Location = new System.Drawing.Point(471, 44);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(50, 23);
             this.button4.TabIndex = 17;
@@ -189,7 +178,7 @@ namespace TRexGUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(535, 127);
+            this.ClientSize = new System.Drawing.Size(553, 127);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label6);
@@ -201,7 +190,6 @@ namespace TRexGUI
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -216,8 +204,6 @@ namespace TRexGUI
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.TextBox textBox2;

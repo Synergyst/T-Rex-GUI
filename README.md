@@ -15,7 +15,7 @@ This GUI is just a UI where certain features will be added to ease the setup of 
 * Rename `config_example` to `config.json` or something else **(So you don't overwrite your custom settings with the default example settings every update!)**
 * Click 'Browse' button for `config` section and select your custom configuration file from the previous step
 * Enter a new password so you have full-access to the WebUI (Make sure your password fits the requirements. Please read the message box window to verify it did!)
-* *Optional (unless you renamed the T-Rex Miner executable):* Click 'Browse' for the 'T-Rex binary file name' section and select whatever you renamed your T-Rex Miner binary file name to
+* *Optional (unless you renamed the T-Rex Miner executable):* Click 'Browse' for the 'T-Rex binary filename' section and select whatever you renamed your T-Rex Miner binary filename to
 * Close the configuration GUI
 * Click 'Start T-Rex' button (make sure that T-Rex starts before next step)
 * Click '[T-Rex WebUI Dashboard](http://127.0.0.1:4067)' on either GUI window (hyperlink on GitHub is only for convienence)

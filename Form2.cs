@@ -18,10 +18,9 @@ namespace TRexGUI {
                 }
             };
         }
-        public void ChooseFile(TextBox tb, OpenFileDialog ofd) {
-            //ofd.InitialDirectory = tb.Text;
-            ofd.Title = "Select the T-Rex Miner executable";
-            ofd.FileName = "t-rex.exe";
+        public void ChooseFile(TextBox tb, OpenFileDialog ofd, String defaultFilename, String windowTitle) {
+            ofd.Title = windowTitle;
+            ofd.FileName = defaultFilename;
             ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             if (ofd.ShowDialog() == DialogResult.OK) {
                 tb.Text = ofd.SafeFileName;
@@ -100,7 +99,7 @@ namespace TRexGUI {
             timer2.Start();
         }
         private void button3_Click(object sender, EventArgs e) {
-            ChooseFile(textBox2, openFileDialog1);
+            ChooseFile(textBox2, openFileDialog1, "config_example", "Select the T-Rex configuration file");
         }
         private void GenerateNewAPIKey() {
             MessageBox.Show((TRexGUI.Program.ExecuteProcess(textBox5.Text, "--api-generate-key " + textBox4.Text + " --config " + textBox2.Text, AppDomain.CurrentDomain.BaseDirectory, ProcessPriorityClass.Normal, false)));
@@ -134,7 +133,7 @@ namespace TRexGUI {
             timer4.Start();
         }
         private void button4_Click(object sender, EventArgs e) {
-            ChooseFile(textBox5, openFileDialog2);
+            ChooseFile(textBox5, openFileDialog2, "t-rex.exe", "Select the T-Rex Miner executable");
         }
         private void timer5_Tick(object sender, EventArgs e) {
             timer5.Stop();
